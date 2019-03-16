@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono");
+* {
+  font-family: 'Roboto Mono', monospace;
+}
+
+body {
+  background: #284370;
+}
+
+#sheetOfPaper {
+  margin: 0 auto;
+  min-height: 150px;
+  height: auto;
+  width: 500px;
+  background: white;
+  margin-bottom: 100px;
+  /* -webkit-box-shadow: 5px 5px 0px 0px #289FED, 10px 10px 0px 0px #5FB8FF, 15px 15px 0px 0px #A1D8FF, 20px 20px 0px 0px #CAE6FF, 25px 25px 0px 0px #E1EEFF, 5px 5px 15px 5px rgba(0,0,0,0); 
+box-shadow: 5px 5px 0px 0px #289FED, 10px 10px 0px 0px #5FB8FF, 15px 15px 0px 0px #A1D8FF, 20px 20px 0px 0px #CAE6FF, 25px 25px 0px 0px #E1EEFF, 5px 5px 15px 5px rgba(0,0,0,0); 
+ 
+   */
+}
+
+/* #deleteAllButton{
+ 
+} */
+#toggleAndAdd {
+  display: flex;
+}
+
+form {
+  width: 100%;
+}
+
+#addTodoTextInput {
+  width: 100%;
+  background: black;
+  font-size: 2em;
+  color: white;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+li {
+  margin: 20px 0 20px 70px;
+  list-style-type: none;
+  display: flex;
+  font-size: 2em;
+}
+
+/* .deleteButton{
+ 
+  
+} */
+#toggleAllButton {
+  width: 20%;
+}
