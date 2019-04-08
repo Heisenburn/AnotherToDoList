@@ -3,16 +3,22 @@
   <head>
     <title>ToDo List</title>
     
+   
+
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
-<!--     <h1><center>A simple TodoList with localStorage</center></h1> -->
+
+
+    <h1><center>A simple TodoList with localStorage</center></h1>
+
+
     <div id="sheetOfPaper">
       
      
        <nav id="toggleAndAdd">
       
-         <button id="toggleAllButton" onclick="handlers.toggleAll()">Toggle All</button>
+         <button id="toggleAllButton" onClick="handlers.toggleAll()">Toggle All</button>
          
          <form onSubmit="return false;"><!--            preventing page fromrefreshing -->
 
@@ -33,23 +39,13 @@
 
     
 </div>
-    
-    <div>
-      <button onclick="handlers.changeTodo()">Change Todo</button>
-      <input id="changeTodoPositionInput" type="number">
-      <input id="changeTodoTextInput" type="text">
-    </div>
-  </div>
+
+      
       <button id="deleteAllButton" onclick="handlers.deleteAllTodos()">Delete All</button>
-    
-    </div>
-    
-    
-    
-    <div>
-      <button onclick="handlers.toggleCompleted()">Toggle Completed</button>
-      <input id="toggleCompletedPositionInput" type="number">
-    </div>
+      <button id="deleteSelected" onclick="handlers.deleteSelected()">Delete Selected</button>
+
+      
       <script src="/index.js"></script>
    </body>
+
 </html>

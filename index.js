@@ -1,10 +1,16 @@
-var todoList = {
+const todosLi = document.getElementsByTagName('li');
+const checkBoxes = document.getElementsByClassName("checkBoxes");
+const bubble = document.querySelector('.bubble');
+const todosUl = document.querySelector("ul");
+
+const todoList = {
   todos: [],
-  
+
   addTodo: function (todoText) {
     this.todos.push({
       todoText: todoText,
-      completed: false
+      completed: false,
+
     });
   },
   changeTodo: function (position, todoText) {
@@ -13,38 +19,7 @@ var todoList = {
   deleteTodo: function (position) {
     this.todos.splice(position, 1);
   },
-  toggleCompleted: function (position) {
-    var todo = this.todos[position];
-    todo.completed = !todo.completed;
-  },
-  toggleAll: function () {
-    var totalTodos = this.todos.length;
-    var completedTodos = 0;
 
-    // Get number of completed todos.
-    this.todos.forEach(function (todo) {
-      if (todo.completed === true) {
-        completedTodos++;
-      }
-
-
-    });
-
-
-    this.todos.forEach(function (todo) {
-
-      //Case 1: If everything’s true, make everything false.
-      if (completedTodos === totalTodos) {
-
-        todo.completed = false;
-        // Case 2: Otherwise, make everything true.
-      } else {
-        todo.completed = true;
-
-      }
-
-    });
-  },
   deleteAllTodos: function () {
 
     this.todos.splice(0, this.todos.length);
@@ -55,18 +30,18 @@ var todoList = {
 
 };
 
-var handlers = {
+const handlers = {
   addTodo: function () {
-    var addTodoTextInput = document.getElementById('addTodoTextInput');
+    const addTodoTextInput = document.getElementById('addTodoTextInput');
     todoList.addTodo(addTodoTextInput.value);
     addTodoTextInput.value = '';
     view.displayTodos();
     saveTodosIntoLocalStorage();
-     
+
   },
   changeTodo: function () {
-    var changeTodoPositionInput = document.getElementById('changeTodoPositionInput');
-    var changeTodoTextInput = document.getElementById('changeTodoTextInput');
+    const changeTodoPositionInput = document.getElementById('changeTodoPositionInput');
+    const changeTodoTextInput = document.getElementById('changeTodoTextInput');
     todoList.changeTodo(changeTodoPositionInput.valueAsNumber, changeTodoTextInput.value);
     changeTodoPositionInput.value = '';
     changeTodoTextInput.value = '';
@@ -82,128 +57,286 @@ var handlers = {
     view.displayTodos();
   },
 
-  toggleCompleted: function () {
-    var toggleCompletedPositionInput = document.getElementById('toggleCompletedPositionInput');
-    todoList.toggleCompleted(toggleCompletedPositionInput.valueAsNumber);
-    toggleCompletedPositionInput.value = '';
-    view.displayTodos();
-  },
-  toggleAll: function () {
-    todoList.toggleAll();
-    view.displayTodos();
-  }
-};
-
-var view = {
-  displayTodos: function () {
-
-    var todosUl = document.querySelector('ul');
-    todosUl.innerHTML = ''; //rendering all elements once again
-
-    
-    todoList.todos.forEach(function (todo, position) {
-
-      var todoLi = document.createElement('li');
-      
-      var circle = document.createElement('input');
-      circle.className = 'checkBoxes';
-     
-      circle.setAttribute('type', 'checkbox');
-
-     
+  deleteSelected: function () {
 
 
-      if (todo.completed === true) {
-        //add class .tick 
+
+    const checkBoxes = document.querySelectorAll('input:checked');
+
+    for (checkBox of checkBoxes) { //checking if all elements are crossed, if so - then use deleteAllTodos() function
+      if (checkBox.length === todoList.todos.length) {
+        handlers.deleteAllTodos();
       } else {
+        for (const element of todoList.todos) {
+
+          if (element.completed === true) {
+
+            const indexOfElement = todoList.todos.indexOf(element);
+            todoList.todos.splice(indexOfElement, 1);
+            view.displayTodos();
+          }
+        }
+      }
+    }
+
+
+    saveTodosIntoLocalStorage();
+
+  },
+
+  toggleAll: function () {
+
+    const buttons = document.getElementsByClassName('checkBoxes');
+    const completedButtons = [];
+    const uncompletedButtons = [];
+    const todosLi = document.getElementsByTagName('li');
+
+    //toggling checked value
+
+    for (const button of buttons) {
+
+
+      if (button.checked === true) {
+
+        completedButtons.push(button);
+
+
+
+      } else {
+        uncompletedButtons.push(button);
 
       }
 
-      todoLi.id = position; //adding html id to every each item in order to manipulate them later
+    }
 
+    if (completedButtons.length === buttons.length) { //only when all elements are selected remove checked
+      for (const button of buttons) {
+        button.checked = false;
+      }
+    }
+
+    for (const button of uncompletedButtons) {
+      button.checked = true;
+    }
+
+
+
+    //toggling crossed class
+
+    for (uncompletedTodo of uncompletedButtons) {
+      for (todo of todosLi) {
+
+        todoList.todos[todo.id].completed = true;
+        todo.classList.add("crossed");
+
+      }
+    }
+
+
+    if (completedButtons.length === buttons.length) { //only when all elements are selected remove class
+      for (completedTodo of completedButtons) {
+        for (todo of todosLi) {
+
+          todoList.todos[todo.id].completed = false;
+          todo.classList.remove("crossed");
+
+
+        }
+      }
+    }
+
+
+    saveTodosIntoLocalStorage();
+
+
+  },
+  toggleCrossed: function (event) {
+
+    const todosLi = document.getElementsByTagName('li');
+    const elementClicked = event.target.id;
+
+    todosLi[elementClicked].classList.toggle("crossed");
+    todoList.todos[elementClicked].completed = !todoList.todos[elementClicked].completed; //toggling the boolean value in the todoList array
+
+    saveTodosIntoLocalStorage();
+
+
+  },
+
+
+  editText: function (event) {
+
+  
+    
+    let elementClicked = event.target.id;
+    const bubble = document.querySelector('.bubble'); 
+   
+    if(bubble){
+      
+      todosUl.removeChild(bubble) //deleting the bubble 
+
+    }else{
+      
+
+      checkBoxes[elementClicked].parentNode.insertBefore(view.createBubble(), checkBoxes[elementClicked]); //inserting bubble before checkbox in the DOM
+
+    }
+   
+
+  
+
+    todosLi[elementClicked].setAttribute('contenteditable', 'true');
+
+
+
+    const editButton = document.getElementsByClassName("editButton");
+    const contenteditable = document.querySelector('[contenteditable]');
+
+
+    
+
+    todosLi[elementClicked].addEventListener('input', function () {
+
+
+      event.target.textContent = "Save";
+      
+    });
+
+   
+    editButton[elementClicked].addEventListener("click", function () {
+
+
+      if (event.target.textContent === "Save") {
+        todoList.todos[elementClicked].todoText = contenteditable.textContent;
+        saveTodosIntoLocalStorage();
+
+
+
+        event.target.textContent = "Saved!";
+        editButton[elementClicked].classList.add("blueButton");
+
+        todosLi[elementClicked].setAttribute('contenteditable', 'false'); //disable edit after saving
+
+        
+    
+
+        setTimeout(function () {
+
+          event.target.textContent = "Edit";
+          editButton[elementClicked].classList.remove("blueButton");
+         
+
+        }, 1000);
+      } 
+
+    
+
+    });
+
+
+    
+  }
+}
+
+
+
+
+const view = {
+  displayTodos: function () {
+
+    const todosUl = document.querySelector('ul');
+    todosUl.innerHTML = ''; //rendering all elements once again
+
+
+    todoList.todos.forEach(function (todo, position) {
+
+
+
+      const todoLi = document.createElement('li');
+      todoLi.id = position; //adding html id to every each item in order to manipulate them later
       todoLi.textContent = todo.todoText;
 
 
 
-      todoLi.insertBefore(circle, todoLi.childNodes[0]);
-      
-
+      todosUl.appendChild(this.createCheckButton(position));
       todosUl.appendChild(todoLi);
 
-      
+      todosUl.appendChild(this.createEditButton(position)); //creating editButton and passing position/id value to it
+
+      if (todo.completed === true) {
+
+        todoLi.className = "crossed";
+        button.checked = true;
+
+      }
+
+
+
 
     }, this); //passing 'this' keyword explicitly to allow createDeleteButton function work within callback function
 
   },
-  
- 
-  createDeleteButton: function () {
-    var deleteButton = document.createElement('button'); //specyfing the type of element
-    deleteButton.textContent = 'x'; //displaying text on a button
-    deleteButton.className = 'deleteButton'; //adding class to the button
-    return deleteButton;
+
+
+  createEditButton: function (position) {
+
+    const editButton = document.createElement('button'); //specyfing the type of element
+    editButton.textContent = 'Edit'; //displaying text on a button
+    editButton.className = 'editButton'; //adding class to the button
+    editButton.setAttribute('onclick', 'handlers.editText(event)');
+    editButton.id = position;
+    editButton.setAttribute('title', 'Click and edit text');
+
+    return editButton;
+
   },
-  setUpEventListeners: function () { //a single event listener instead of many
+  createCheckButton: function (position) {
 
-    var todosUl = document.querySelector('ul');
-    var deleteAllButton = document.getElementById('deleteAllButton');
-
-
-
-    todosUl.addEventListener('click', function (event) { //listening for clicking the delete button 
-
-      //get the element that was clicked on
-      var elementClicked = event.target;
-
-      //chceck if elementClicked is a delete button
-      if (elementClicked.className === 'deleteButton') {
-        handlers.deleteTodo(parseInt(elementClicked.parentNode.id)); //eleteButton is child of li 
-      }
-    });
+    const button = document.createElement('input');
+    button.className = 'checkBoxes';
+    button.setAttribute('type', 'checkbox');
+    button.setAttribute('onclick', 'handlers.toggleCrossed(event)');
+    button.id = position;
 
 
+    return button;
+  },
 
+  createBubble: function () {
 
-    deleteAllButton.addEventListener('click', function (event) {
+    const bubble = document.createElement('div');
+    bubble.classList.add('bubble');
+    bubble.innerText = "Click on the text to edit it";
 
-      //get the element that was clicked on
-      var elementClicked = event.target;
-
-      if (elementClicked.idName === "deleteAllButton") {
-
-        handlers.deleteAllTodos(parseInt(elementClicked));
-
-      }
-    });
-
+    return bubble;
   }
 }
 
 
 
-
- 
-view.setUpEventListeners();
-
-
-if (todoList.todos.length === 0){ //checking if there are any elements in the list before retrieving data from exisiting array
-  getTodosFromLocalStorage(); 
+if (todoList.todos.length === 0) { //checking if there are any elements in the list before retrieving data from exisiting array
+  getTodosFromLocalStorage();
 }
 
 
-view.setUpEventListeners();
 
 
-function saveTodosIntoLocalStorage(){
 
-  var array = todoList.todos;
+function saveTodosIntoLocalStorage() {
+
+  const array = todoList.todos;
   localStorage.setItem("array", JSON.stringify(array));
-  
-  }
-
-function getTodosFromLocalStorage(){
-
-todoList.todos = JSON.parse(localStorage.getItem("array"));
-view.displayTodos();
 
 }
+
+function getTodosFromLocalStorage() {
+
+  todoList.todos = JSON.parse(localStorage.getItem("array"));
+  view.displayTodos();
+
+}
+
+
+Element.prototype.appendAfter = function (element) {
+  element.parentNode.insertBefore(this, element.nextSibling);
+}, false;

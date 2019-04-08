@@ -3,13 +3,17 @@
   font-family: 'Roboto Mono', monospace;
 }
 
+*{
+  box-sizing: border-box !important;
+}
+
 body {
   background: #284370;
 }
 
 #sheetOfPaper {
   margin: 0 auto;
-  min-height: 150px;
+  
   height: auto;
   width: 500px;
   background: white;
@@ -44,21 +48,87 @@ form {
 ul {
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
+  
+  
+  
 }
 
 li {
-  margin: 20px 0 20px 70px;
+  padding: 20px 0;
+  margin: 20px 90px; 
   list-style-type: none;
-  display: flex;
   font-size: 2em;
+  width: 300px;
+ 
 }
 
-/* .deleteButton{
- 
+.checkBoxes{
+  margin: 35px 50px 0 40px;
+  float: left;
+   
   
-} */
+}
+
+
 #toggleAllButton {
   width: 20%;
+}
+
+
+.crossed{
+  background: gray;
+  text-decoration: line-through;
+  
+}
+
+#deleteAllButton, #deleteSelected{
+  display: block;
+  margin: 10px auto;
+}
+ 
+.editButton{
+
+ display: block;
+ float: right;
+ margin-top: -70px;
+ margin-right: 40px;
+
+}
+
+
+.blueButton{
+  background: blue;
+  color: white;
+}
+
+
+
+
+.bubble {
+	position: absolute;
+	background: #00aabb;
+  border-radius: .3em;
+  /* bottom: 200px; */
+  /* left: 450px; */
+  width: 300px; 
+  font-size: 15px;
+}
+
+.bubble:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-top-color: #00aabb;
+	border-bottom: 0;
+	border-left: 0;
+	margin-left: -10px;
+	margin-bottom: -20px;
+}
+
+h1{
+  color: white;
 }
