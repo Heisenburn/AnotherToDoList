@@ -168,7 +168,7 @@ const handlers = {
 
   
     
-    let elementClicked = event.target.id;
+    const elementClicked = event.target.id;
     const bubble = document.querySelector('.bubble'); 
    
     if(bubble){

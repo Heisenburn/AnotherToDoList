@@ -1,11 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto+Mono");
 * {
   font-family: 'Roboto Mono', monospace;
+ 
 }
 
-*{
-  box-sizing: border-box !important;
-}
+
+
 
 body {
   background: #284370;
@@ -18,15 +18,10 @@ body {
   width: 500px;
   background: white;
   margin-bottom: 100px;
-  /* -webkit-box-shadow: 5px 5px 0px 0px #289FED, 10px 10px 0px 0px #5FB8FF, 15px 15px 0px 0px #A1D8FF, 20px 20px 0px 0px #CAE6FF, 25px 25px 0px 0px #E1EEFF, 5px 5px 15px 5px rgba(0,0,0,0); 
-box-shadow: 5px 5px 0px 0px #289FED, 10px 10px 0px 0px #5FB8FF, 15px 15px 0px 0px #A1D8FF, 20px 20px 0px 0px #CAE6FF, 25px 25px 0px 0px #E1EEFF, 5px 5px 15px 5px rgba(0,0,0,0); 
- 
-   */
+  overflow: auto;
 }
 
-/* #deleteAllButton{
- 
-} */
+
 #toggleAndAdd {
   display: flex;
 }
@@ -59,6 +54,9 @@ li {
   list-style-type: none;
   font-size: 2em;
   width: 300px;
+  word-wrap: break-word;  /* preventing going out of box in the case of longer word */
+  border: 1px solid black;
+  
  
 }
 
@@ -88,11 +86,11 @@ li {
  
 .editButton{
 
+ 
  display: block;
  float: right;
- margin-top: -70px;
- margin-right: 40px;
-
+ margin-top: -75px;
+ margin-right: 40px; 
 }
 
 
