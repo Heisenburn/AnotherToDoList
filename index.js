@@ -314,10 +314,9 @@ const view = {
 
 
 
-if (todoList.todos.length === 0) { //checking if there are any elements in the list before retrieving data from exisiting array
+if (localStorage.length >= 1){ //checking if there are any elements in localStorage
   getTodosFromLocalStorage();
 }
-
 
 
 

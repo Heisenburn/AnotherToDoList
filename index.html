@@ -1,51 +1,56 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>ToDo List</title>
-    
-   
 
-    <link rel="stylesheet" type="text/css" href="style.css">
-  </head>
-  <body>
+<head>
+  <title>ToDo List</title>
 
 
-    <h1><center>A simple TodoList with localStorage</center></h1>
+
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
 
 
-    <div id="sheetOfPaper">
-      
-     
-       <nav id="toggleAndAdd">
-      
-         <button id="toggleAllButton" onClick="handlers.toggleAll()">Toggle All</button>
-         
-         <form onSubmit="return false;"><!--            preventing page fromrefreshing when enter is hit -->
+  <h1>
+    <center>A simple TodoList with localStorage</center>
+  </h1>
 
-          <input id="addTodoTextInput" type="text" placeholder="Add new">
-         <input style="display:none;" type="submit" onclick="handlers.addTodo()"></input>
-         
-         </form>
-      
-      </nav>
-       
-     
+
+  <div id="sheetOfPaper">
+
+
+    <nav id="toggleAndAdd">
+
+      <button id="toggleAllButton" onClick="handlers.toggleAll()">Toggle All</button>
+
+      <form onSubmit="return false;">
+        <!--            preventing page fromrefreshing when enter is hit -->
+
+        <input id="addTodoTextInput" type="text" placeholder="Add new">
+        <input style="display:none;" type="submit" onclick="handlers.addTodo()"></input>
+
+      </form>
+
+    </nav>
+
+
 
     <ul>
-     
+
     </ul>
-      
-   
 
-    
-</div>
 
-      
-      <button id="deleteAllButton" onclick="handlers.deleteAllTodos()">Delete All</button>
-      <button id="deleteSelected" onclick="handlers.deleteSelected()">Delete Selected</button>
 
-      
-      <script src="/index.js"></script>
-   </body>
+
+  </div>
+
+
+  <button id="deleteAllButton" onclick="handlers.deleteAllTodos()">Delete All</button>
+  <button id="deleteSelected" onclick="handlers.deleteSelected()">Delete Selected</button>
+
+
+  <script src="/index.js"></script>
+</body>
 
 </html>
